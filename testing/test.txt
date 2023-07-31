@@ -1,0 +1,78 @@
+package main
+
+import (
+	"fmt"
+	"net/http"
+
+	"github.com/gorilla/websocket"
+	"github.com/labstack/echo"
+)
+
+var upgrader = websocket.Upgrader{
+	CheckOrigin: func(r *http.Request) bool {
+		return true
+	},
+}
+
+var connections = make(map[string]*websocket.Conn)
+var connections1 = make(map[string]*websocket.Conn)
+
+func handleWebSocket(c echo.Context) error {
+	conn, err := upgrader.Upgrade(c.Response(), c.Request(), nil)
+	if err != nil {
+		return err
+	}
+
+	connID := fmt.Sprintf("conn-%d", len(connections)+1)
+	connections[connID] = conn
+
+	for {
+		_, msg, err := conn.ReadMessage()
+		if err != nil {
+			return err
+		}
+
+		for id, con := range connections1 {
+			con.WriteMessage(websocket.TextMessage, msg)
+			fmt.Printf("Broadcasting into %s\n", id)
+		}
+	}
+	conn.Close()
+	delete(connections, connID)
+
+	return nil
+}
+
+func handleWebSocket1(c echo.Context) error {
+	conn, err := upgrader.Upgrade(c.Response(), c.Request(), nil)
+	if err != nil {
+		return err
+	}
+
+	connID := fmt.Sprintf("conn-%d", len(connections)+1)
+	connections1[connID] = conn
+
+	for {
+		_, msg, err := conn.ReadMessage()
+		if err != nil {
+			return err
+		}
+
+		for id, con := range connections {
+			con.WriteMessage(websocket.TextMessage, msg)
+			fmt.Printf("Broadcasting into %s\n", id)
+		}
+	}
+	conn.Close()
+	delete(connections1, connID)
+
+	return nil
+}
+
+func main() {
+	fmt.Println("Hello World!")
+	server := echo.New()
+	server.GET("/ws", handleWebSocket)
+	server.GET("/ws1", handleWebSocket1)
+	server.Logger.Fatal(server.Start(":2000"))
+}
