@@ -1,15 +1,15 @@
-create database jackryan;
-use jackryan;
-show tables;
-create table Accounts (
-	id integer not null auto_increment unique,
-    username varchar(255) not null,
-    email varchar(255) unique,
-    passwordHash varchar(255),
-    saltId integer not null,
-    dateCreated datetime default current_timestamp,
-    passwordChangedTime datetime default current_timestamp,
-    primary key(Id)
+#create database jack_db;
+use jack_db;
+
+CREATE TABLE Accounts (
+    id INTEGER NOT NULL AUTO_INCREMENT UNIQUE,
+    username VARCHAR(255) NOT NULL,
+    email VARCHAR(255) UNIQUE,
+    passwordHash VARCHAR(255),
+    saltId INTEGER NOT NULL,
+    dateCreated DATETIME DEFAULT CURRENT_TIMESTAMP,
+    passwordChangedTime DATETIME DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (Id)
 );
 
 create table Salts (
@@ -24,10 +24,6 @@ add foreign key(saltId) references Salts(id);
 
 insert into Salts(salt) values('salt1');
 insert into Accounts(username, passwordHash, saltId) values('demo','salthash1',1);
-
-show tables;
-select * from Salts;
-select * from Accounts;
 
 update Accounts set email = "demo@email.com"  where id = 1;
 
