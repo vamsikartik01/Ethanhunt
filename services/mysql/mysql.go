@@ -26,7 +26,6 @@ func InitConnection() {
 	if err != nil {
 		fmt.Println("Connection to postgres failed with error : ", err)
 	}
-	defer db.Close()
 
 	if err = db.Ping(); err != nil {
 		fmt.Println("Connection unsuccessfull with error :", err)
@@ -59,5 +58,9 @@ func InitConnection() {
 	if err := rows.Err(); err != nil {
 		log.Fatalf("", err)
 	}
-	_ = GetRooms()
+
+}
+
+func CloseConnection() {
+	db.Close()
 }
