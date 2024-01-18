@@ -1,0 +1,14 @@
+{
+    "service":"ethanhunt",
+    "jwt": {
+        "secret" : "<AUTH_SECRET>"
+    },
+    "mysql": {
+        "host":"",
+        "port":"",
+        "username":"",
+        "password":"",
+        "database":""
+    },
+    "weather_api_key" : "<API_KEY>"
+}

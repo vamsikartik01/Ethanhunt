@@ -3,6 +3,7 @@ module github.com/vamsikartik01/Ethanhunt
 go 1.19
 
 require (
+	github.com/dgrijalva/jwt-go v3.2.0+incompatible // indirect
 	github.com/go-sql-driver/mysql v1.7.1 // indirect
 	github.com/gorilla/websocket v1.5.0 // indirect
 	github.com/labstack/echo v3.3.10+incompatible // indirect
