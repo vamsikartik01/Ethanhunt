@@ -22,7 +22,6 @@ func GetHubs(accountSid int) ([]models.Hubs, error) {
 			log.Println("Error unmarshalling hubs.")
 			return nil, err
 		}
-		log.Println(hub.Id, hub.Name, hub.AccountSid)
 		hubs = append(hubs, hub)
 	}
 

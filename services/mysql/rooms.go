@@ -23,7 +23,6 @@ func GetRooms(accountSid int) ([]models.Rooms, error) {
 				log.Println("Error unmarshalling rooms.")
 				return nil, err
 			}
-			log.Println(room.Id, room.Name, room.AccountSid)
 			rooms = append(rooms, room)
 		}
 

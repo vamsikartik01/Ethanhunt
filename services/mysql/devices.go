@@ -22,7 +22,6 @@ func GetDevices(accountSid int) ([]models.Devices, error) {
 			log.Println("Error unmarshalling Devices.")
 			return nil, err
 		}
-		log.Println(device.Id, device.Name, device.AccountSid)
 		devices = append(devices, device)
 	}
 
